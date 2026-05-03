@@ -1,0 +1,89 @@
+╔═══════════════════════════════════════════════════════════════╗
+║                                                               ║
+║           📱 FLUENTA APP - FILE INSTALASI MOBILE              ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝
+
+✅ FILE APK ANDROID SUDAH SIAP!
+
+┌───────────────────────────────────────────────────────────────┐
+│  📦 INFORMASI FILE                                            │
+└───────────────────────────────────────────────────────────────┘
+
+  Nama File    : fluenta-app.apk
+  Ukuran       : 48 MB
+  Versi        : 1.0.0
+  Build        : Release
+  Platform     : Android 5.0+
+
+┌───────────────────────────────────────────────────────────────┐
+│  📍 LOKASI FILE                                               │
+└───────────────────────────────────────────────────────────────┘
+
+  Folder:
+  /Users/muhammadrizky/Documents/mobile/duolingo_clone/instalasi/android/
+
+  File:
+  fluenta-app.apk
+
+┌───────────────────────────────────────────────────────────────┐
+│  🚀 CARA BUKA FOLDER                                          │
+└───────────────────────────────────────────────────────────────┘
+
+  1. Buka Finder
+  2. Tekan: Cmd + Shift + G
+  3. Paste: /Users/muhammadrizky/Documents/mobile/duolingo_clone/instalasi/android/
+  4. Tekan Enter
+
+  Atau jalankan di Terminal:
+  open /Users/muhammadrizky/Documents/mobile/duolingo_clone/instalasi/android/
+
+┌───────────────────────────────────────────────────────────────┐
+│  📱 CARA INSTALL DI HP ANDROID                                │
+└───────────────────────────────────────────────────────────────┘
+
+  CARA TERCEPAT:
+  
+  1. Hubungkan HP ke Mac dengan kabel USB
+  2. Buka Android File Transfer
+  3. Drag file "fluenta-app.apk" ke folder Download di HP
+  4. Di HP: Buka Files → Downloads → Tap APK → Install
+
+  CARA ALTERNATIF:
+  
+  • Upload ke Google Drive → Download di HP → Install
+  • Kirim via WhatsApp → Download → Install
+  • Kirim via Email → Download → Install
+
+┌───────────────────────────────────────────────────────────────┐
+│  📖 PANDUAN LENGKAP                                           │
+└───────────────────────────────────────────────────────────────┘
+
+  Baca file:
+  • INSTALL-ANDROID.txt       (Panduan singkat)
+  • CARA-INSTALL-MOBILE.md    (Panduan lengkap)
+
+┌───────────────────────────────────────────────────────────────┐
+│  ⚙️  PERSYARATAN                                              │
+└───────────────────────────────────────────────────────────────┘
+
+  ✓ Android 5.0 atau lebih baru
+  ✓ RAM minimal 2 GB
+  ✓ Storage minimal 100 MB
+  ✓ Enable "Install from Unknown Sources"
+
+┌───────────────────────────────────────────────────────────────┐
+│  🎯 LANGKAH SINGKAT                                           │
+└───────────────────────────────────────────────────────────────┘
+
+  1. Copy APK ke HP
+  2. Buka file APK
+  3. Enable "Unknown Sources" jika diminta
+  4. Tap Install
+  5. Selesai! 🎉
+
+╔═══════════════════════════════════════════════════════════════╗
+║                                                               ║
+║              FILE SIAP DIINSTALL DI HP ANDROID!               ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝

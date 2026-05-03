@@ -1,0 +1,121 @@
+═══════════════════════════════════════════════════════════════
+  📱 CARA INSTALL FLUENTA APP DI HP ANDROID
+═══════════════════════════════════════════════════════════════
+
+✅ FILE APK SUDAH SIAP!
+
+📍 Lokasi File:
+   /Users/muhammadrizky/Documents/mobile/duolingo_clone/instalasi/android/fluenta-app.apk
+
+📦 Ukuran: 48 MB
+🔢 Versi: 1.0.0
+
+═══════════════════════════════════════════════════════════════
+  🚀 CARA INSTALL (PILIH SALAH SATU)
+═══════════════════════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────────────┐
+│ METODE 1: TRANSFER VIA KABEL USB (PALING MUDAH)            │
+└─────────────────────────────────────────────────────────────┘
+
+1. Hubungkan HP Android ke Mac dengan kabel USB
+
+2. Buka Android File Transfer (download di: android.com/filetransfer)
+
+3. Di Mac:
+   - Buka Finder
+   - Tekan: Cmd + Shift + G
+   - Paste: /Users/muhammadrizky/Documents/mobile/duolingo_clone/instalasi/android/
+   - Drag file "fluenta-app.apk" ke folder Download di HP
+
+4. Di HP Android:
+   - Buka aplikasi "Files" atau "File Manager"
+   - Masuk ke folder "Downloads"
+   - Tap file "fluenta-app.apk"
+   - Jika muncul peringatan, tap "Settings" → Enable "Allow from this source"
+   - Tap "Install"
+   - Tap "Open" untuk membuka aplikasi
+
+┌─────────────────────────────────────────────────────────────┐
+│ METODE 2: UPLOAD KE GOOGLE DRIVE                           │
+└─────────────────────────────────────────────────────────────┘
+
+1. Di Mac:
+   - Buka drive.google.com
+   - Upload file "fluenta-app.apk"
+
+2. Di HP Android:
+   - Buka Google Drive
+   - Download file "fluenta-app.apk"
+   - Buka dari notifikasi
+   - Install seperti Metode 1
+
+┌─────────────────────────────────────────────────────────────┐
+│ METODE 3: KIRIM VIA WHATSAPP                               │
+└─────────────────────────────────────────────────────────────┘
+
+1. Di Mac:
+   - Buka WhatsApp Web
+   - Kirim file "fluenta-app.apk" ke chat Anda sendiri
+
+2. Di HP Android:
+   - Buka WhatsApp
+   - Download file
+   - Install seperti Metode 1
+
+┌─────────────────────────────────────────────────────────────┐
+│ METODE 4: KIRIM VIA EMAIL                                  │
+└─────────────────────────────────────────────────────────────┘
+
+1. Kirim email ke diri sendiri dengan attachment "fluenta-app.apk"
+2. Buka email di HP
+3. Download attachment
+4. Install seperti Metode 1
+
+═══════════════════════════════════════════════════════════════
+  ⚠️  TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════
+
+❌ "Install Blocked" atau "Can't Install Unknown Apps"
+   ✅ Solusi:
+      Settings → Security → Install unknown apps → 
+      Pilih aplikasi (Files/Chrome) → Enable
+
+❌ "App not installed"
+   ✅ Kemungkinan:
+      - Storage penuh (butuh minimal 100 MB)
+      - APK corrupt (download ulang)
+      - Android terlalu lama (minimal Android 5.0)
+
+❌ "Parse Error"
+   ✅ Solusi:
+      - Download ulang file APK
+      - Pastikan file tidak corrupt
+
+═══════════════════════════════════════════════════════════════
+  📋 PERSYARATAN SISTEM
+═══════════════════════════════════════════════════════════════
+
+✓ Android 5.0 (Lollipop) atau lebih baru
+✓ RAM minimal 2 GB
+✓ Storage minimal 100 MB free space
+✓ Internet (untuk fitur AI Chat)
+
+═══════════════════════════════════════════════════════════════
+  🎯 LANGKAH SINGKAT
+═══════════════════════════════════════════════════════════════
+
+1. Copy file APK ke HP (via USB/Cloud/Email/WhatsApp)
+2. Buka file APK di HP
+3. Enable "Install from Unknown Sources" jika diminta
+4. Tap Install
+5. Selesai! 🎉
+
+═══════════════════════════════════════════════════════════════
+
+📖 Panduan lengkap: Baca file "CARA-INSTALL-MOBILE.md"
+
+🔗 Buka folder instalasi:
+   open /Users/muhammadrizky/Documents/mobile/duolingo_clone/instalasi/android/
+
+═══════════════════════════════════════════════════════════════
