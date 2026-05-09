@@ -30,7 +30,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   Future<void> _handleRegister() async {
     if (_nameController.text.isEmpty || _emailController.text.isEmpty || _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill all fields')),
+        const SnackBar(content: Text('Harap isi semua kolom')),
       );
       return;
     }
@@ -50,7 +50,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Registration failed: ${e.toString()}')),
+          SnackBar(content: Text('Pendaftaran gagal: ${e.toString()}')),
         );
       }
     } finally {
@@ -74,9 +74,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final titles = [
-      'What is your name?',
-      'What is your email?',
-      'Create a password',
+      'Siapa nama kamu?',
+      'Apa email kamu?',
+      'Buat kata sandi',
     ];
     
     final icons = [
@@ -96,7 +96,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             if (_currentStep > 0) {
               setState(() => _currentStep--);
             } else {
-              context.pop();
+              try {
+                if (Navigator.of(context).canPop()) {
+                  context.pop();
+                }
+              } catch (e) {
+                // Ignore pop errors
+              }
             }
           },
         ),
@@ -129,7 +135,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               ),
               const SizedBox(height: 12),
               Text(
-                'Step ${_currentStep + 1} of 3',
+                'Langkah ${_currentStep + 1} dari 3',
                 style: GoogleFonts.lexend(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -167,7 +173,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                   decoration: InputDecoration(
                     prefixIcon: Icon(icons[_currentStep], color: AppTheme.primaryBlue),
-                    hintText: _currentStep == 0 ? 'Full Name' : _currentStep == 1 ? 'Email address' : 'Password',
+                    hintText: _currentStep == 0 ? 'Nama Lengkap' : _currentStep == 1 ? 'Alamat email' : 'Kata sandi',
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   ),
@@ -207,7 +213,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
                         )
                       : Text(
-                          _currentStep == 2 ? 'Create Account' : 'Continue',
+                          _currentStep == 2 ? 'Buat Akun' : 'Lanjutkan',
                           style: GoogleFonts.lexend(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

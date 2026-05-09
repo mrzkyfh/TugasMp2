@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../chat_ai/presentation/chat_screen.dart';
 import '../../profile/presentation/profile_screen.dart';
-import '../../quiz/presentation/quiz_screen.dart';
+import '../../quiz/presentation/level_selection_screen.dart';
 import '../../vocabulary/presentation/vocabulary_screen.dart';
 import 'home_screen.dart';
 
@@ -20,7 +20,7 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
   final List<Widget> _screens = [
     const HomeScreen(),
     const ChatScreen(),
-    const QuizScreen(),
+    const LevelSelectionScreen(),
     const VocabularyScreen(),
     const ProfileScreen(),
   ];
@@ -29,31 +29,6 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(index: _currentIndex, children: _screens),
-      floatingActionButton: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
-          boxShadow: [
-            BoxShadow(
-              color: AppTheme.secondaryYellow.withValues(alpha: 0.3),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: FloatingActionButton(
-          onPressed: () {
-            // Navigate to add new content or quick action
-          },
-          backgroundColor: AppTheme.secondaryYellow,
-          elevation: 0,
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
-            size: 32,
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -80,7 +55,7 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
                 _buildNavItem(
                   icon: Icons.home_outlined,
                   activeIcon: Icons.home,
-                  label: 'HOME',
+                  label: 'BERANDA',
                   index: 0,
                   isActive: _currentIndex == 0,
                 ),
@@ -101,14 +76,14 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
                 _buildNavItem(
                   icon: Icons.menu_book_outlined,
                   activeIcon: Icons.menu_book,
-                  label: 'WORDS',
+                  label: 'KATA',
                   index: 3,
                   isActive: _currentIndex == 3,
                 ),
                 _buildNavItem(
                   icon: Icons.person_outline,
                   activeIcon: Icons.person,
-                  label: 'PROFILE',
+                  label: 'PROFIL',
                   index: 4,
                   isActive: _currentIndex == 4,
                 ),

@@ -1,34 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../../core/providers/user_progress_provider.dart';
 import '../../../../core/theme/app_theme.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(currentUserProvider);
+    final progressAsync = ref.watch(userProgressProvider);
+
+    final displayName = user?.userMetadata?['full_name'] as String? ??
+        user?.email?.split('@').first ??
+        'User';
+    final email = user?.email ?? '';
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FF),
       appBar: AppBar(
         backgroundColor: Colors.white.withValues(alpha: 0.8),
         elevation: 0,
         surfaceTintColor: Colors.transparent,
-        title: Row(
-          children: [
-            IconButton(
-              icon: const Icon(Icons.menu, color: AppTheme.primaryBlue),
-              onPressed: () {},
-            ),
-            Text(
-              'Fluenta',
-              style: GoogleFonts.plusJakartaSans(
-                fontWeight: FontWeight.w900,
-                fontSize: 22,
-                color: AppTheme.primaryBlue,
-                letterSpacing: -0.5,
-              ),
-            ),
-          ],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppTheme.primaryBlue),
+          onPressed: () {
+            try {
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              }
+            } catch (e) {
+              // Ignore pop errors
+            }
+          },
+        ),
+        title: Text(
+          'Fluenta',
+          style: GoogleFonts.plusJakartaSans(
+            fontWeight: FontWeight.w900,
+            fontSize: 22,
+            color: AppTheme.primaryBlue,
+            letterSpacing: -0.5,
+          ),
         ),
         actions: [
           Padding(
@@ -106,7 +121,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              'Alex Rivers',
+              displayName,
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
@@ -115,25 +130,40 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'Language Enthusiast • Level 24',
+              email,
               style: GoogleFonts.lexend(
-                fontSize: 16,
+                fontSize: 14,
                 color: AppTheme.textLight,
+              ),
+            ),
+            const SizedBox(height: 4),
+            progressAsync.when(
+              loading: () => const SizedBox(height: 20),
+              error: (e, s) => const SizedBox.shrink(),
+              data: (progress) => Text(
+                'Pecinta Bahasa • Level ${progress.level}',
+                style: GoogleFonts.lexend(
+                  fontSize: 16,
+                  color: AppTheme.textLight,
+                ),
               ),
             ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildLanguageTag('English (Fluent)', AppTheme.primaryBlue, const Color(0xFFE0E7FF)),
+                _buildLanguageTag('Inggris (Lancar)', AppTheme.primaryBlue, const Color(0xFFE0E7FF)),
                 const SizedBox(width: 8),
-                _buildLanguageTag('Spanish (Learning)', AppTheme.tertiaryOrange, const Color(0xFFFFEDD5)),
+                _buildLanguageTag('Spanyol (Belajar)', AppTheme.tertiaryOrange, const Color(0xFFFFEDD5)),
               ],
             ),
             const SizedBox(height: 40),
 
             // Statistics Grid
-            GridView.count(
+            progressAsync.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (e, s) => const SizedBox.shrink(),
+              data: (progress) => GridView.count(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 2,
@@ -143,94 +173,42 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 _buildStatCard(
                   icon: Icons.menu_book,
-                  value: '1,248',
-                  label: 'WORDS LEARNED',
+                  value: '${progress.totalWordsLearned}',
+                  label: 'KATA DIPELAJARI',
                   color: AppTheme.primaryBlue,
                   bgColor: AppTheme.primaryBlue.withValues(alpha: 0.1),
                 ),
                 _buildStatCard(
-                  icon: Icons.quiz,
-                  value: '86',
-                  label: 'QUIZZES TAKEN',
+                  icon: Icons.star,
+                  value: '${progress.xp} XP',
+                  label: 'TOTAL XP',
                   color: AppTheme.secondaryYellow,
                   bgColor: AppTheme.secondaryYellow.withValues(alpha: 0.2),
                 ),
                 _buildStatCard(
                   icon: Icons.local_fire_department,
-                  value: '14',
-                  label: 'DAY STREAK',
+                  value: '${progress.streakDays}',
+                  label: 'HARI BERUNTUN',
                   color: AppTheme.tertiaryOrange,
                   bgColor: AppTheme.tertiaryOrange.withValues(alpha: 0.1),
                 ),
                 _buildStatCard(
-                  icon: Icons.timer,
-                  value: '42h',
-                  label: 'STUDY TIME',
+                  icon: Icons.emoji_events,
+                  value: 'Lv. ${progress.level}',
+                  label: progress.levelLabel.toUpperCase(),
                   color: AppTheme.textMain,
                   bgColor: const Color(0xFFDCE9FF),
                 ),
               ],
             ),
-            const SizedBox(height: 24),
-
-            // Badges Section
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: const Color(0xFFF1F5F9)),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppTheme.primaryBlue.withValues(alpha: 0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Earned Badges',
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.textMain,
-                        ),
-                      ),
-                      Text(
-                        'View All',
-                        style: GoogleFonts.lexend(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: AppTheme.primaryBlue,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildBadgeItem('EARLY BIRD', Icons.workspace_premium, [Colors.yellow.shade100, Colors.yellow.shade300], Colors.yellow.shade700),
-                      _buildBadgeItem('VOCAB KING', Icons.auto_awesome, [Colors.blue.shade100, Colors.blue.shade300], Colors.blue.shade700),
-                      _buildBadgeItem('SOCIALIZER', Icons.military_tech, [Colors.orange.shade100, Colors.orange.shade300], Colors.orange.shade700),
-                      _buildBadgeItem('POLYGLOT', Icons.lock, [Colors.grey.shade200, Colors.grey.shade200], Colors.grey.shade500, isLocked: true),
-                    ],
-                  ),
-                ],
-              ),
             ),
             const SizedBox(height: 32),
 
-            // App Settings Section
+            // Pengaturan Aplikasi
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'App Settings',
+                'Pengaturan Aplikasi',
                 style: GoogleFonts.plusJakartaSans(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -249,34 +227,34 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   _buildSettingItem(
                     icon: Icons.notifications,
-                    title: 'Reminders & Notifications',
-                    subtitle: 'Daily goals and study alerts',
+                    title: 'Pengingat & Notifikasi',
+                    subtitle: 'Target harian dan pengingat belajar',
                     trailing: const Icon(Icons.chevron_right, color: AppTheme.textLight),
                   ),
                   const Divider(height: 1, color: Color(0xFFF8FAFC)),
                   _buildSettingItem(
                     icon: Icons.dark_mode,
-                    title: 'Display & Theme',
-                    subtitle: 'Light, Dark, or System mode',
+                    title: 'Tampilan & Tema',
+                    subtitle: 'Mode Terang, Gelap, atau Sistem',
                     trailing: Switch(
                       value: true,
                       onChanged: (v) {},
-                      activeColor: Colors.white,
+                      activeThumbColor: Colors.white,
                       activeTrackColor: AppTheme.primaryBlue,
                     ),
                   ),
                   const Divider(height: 1, color: Color(0xFFF8FAFC)),
                   _buildSettingItem(
                     icon: Icons.translate,
-                    title: 'Target Language',
-                    subtitle: 'Change your learning focus',
+                    title: 'Bahasa Target',
+                    subtitle: 'Ubah fokus belajarmu',
                     trailing: const Icon(Icons.chevron_right, color: AppTheme.textLight),
                   ),
                   const Divider(height: 1, color: Color(0xFFF8FAFC)),
                   _buildSettingItem(
                     icon: Icons.verified_user,
-                    title: 'Account Privacy',
-                    subtitle: 'Profile visibility and data',
+                    title: 'Privasi Akun',
+                    subtitle: 'Visibilitas profil dan data',
                     trailing: const Icon(Icons.chevron_right, color: AppTheme.textLight),
                   ),
                 ],
@@ -300,7 +278,12 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
               child: InkWell(
-                onTap: () {},
+                onTap: () async {
+                  await ref.read(userProgressControllerProvider.notifier)
+                      .resetDailyXp();
+                  await Supabase.instance.client.auth.signOut();
+                  if (context.mounted) context.go('/login');
+                },
                 borderRadius: BorderRadius.circular(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -308,7 +291,7 @@ class ProfileScreen extends StatelessWidget {
                     const Icon(Icons.logout, color: AppTheme.dangerRed),
                     const SizedBox(width: 8),
                     Text(
-                      'Sign Out',
+                      'Keluar',
                       style: GoogleFonts.lexend(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -394,48 +377,6 @@ class ProfileScreen extends StatelessWidget {
               fontWeight: FontWeight.w600,
               color: AppTheme.textLight,
               letterSpacing: 1,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBadgeItem(String label, IconData icon, List<Color> gradient, Color iconColor, {bool isLocked = false}) {
-    return Opacity(
-      opacity: isLocked ? 0.4 : 1.0,
-      child: Column(
-        children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: gradient,
-              ),
-              borderRadius: BorderRadius.circular(16),
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.black.withValues(alpha: 0.2),
-                  width: 4,
-                ),
-              ),
-            ),
-            child: Icon(icon, color: iconColor, size: 30),
-          ),
-          const SizedBox(height: 8),
-          SizedBox(
-            width: 60,
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.lexend(
-                fontSize: 8,
-                fontWeight: FontWeight.w800,
-                color: AppTheme.textLight,
-              ),
             ),
           ),
         ],

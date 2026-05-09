@@ -5,16 +5,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluenta/main.dart';
 
 void main() {
-  testWidgets('App renders splash and navigates to auth', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('App renders splash and navigates to auth', (tester) async {
     await tester.pumpWidget(const ProviderScope(child: FluentaApp()));
 
     expect(find.byKey(const ValueKey('fluenta-logo')), findsOneWidget);
+    expect(find.text('Fluenta'), findsOneWidget);
+    expect(find.text('Mulai Sekarang'), findsOneWidget);
 
-    await tester.pump(const Duration(seconds: 2));
-    await tester.pump();
+    await tester.tap(find.text('Mulai Sekarang'));
+    await tester.pumpAndSettle();
 
-    expect(find.text('Learn a language for free.\nForever.'), findsOneWidget);
+    expect(find.text('Siapa nama kamu?'), findsOneWidget);
   });
 }

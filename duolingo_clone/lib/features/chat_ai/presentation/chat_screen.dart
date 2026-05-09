@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fluenta/core/theme/app_theme.dart';
 import 'package:fluenta/shared/widgets/message_bubble.dart';
+import 'package:fluenta/shared/widgets/rive_character.dart';
 import '../data/cerebras_service.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -26,12 +27,13 @@ class _ChatScreenState extends State<ChatScreen> {
   final List<ChatMessage> _messages = [
     ChatMessage(
       text:
-          'Hi! aku Fluenta, Penerjemah kamu, Apa yang mau kamu terjemahin?',
+          'Halo! Aku Fluenta 👋\nKetik kalimat bahasa Indonesia kamu, nanti aku terjemahin ke bahasa Inggris plus kasih tips belajarnya. Yuk mulai! 🚀',
       isUser: false,
     ),
   ];
 
   bool _isLoading = false;
+  String _currentAnimation = 'idle';
 
   void _sendMessage() async {
     final text = _textController.text.trim();
@@ -40,17 +42,36 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {
       _messages.add(ChatMessage(text: text, isUser: true));
       _isLoading = true;
+      _currentAnimation = 'hands_up'; // Animasi saat user kirim pesan
     });
     _textController.clear();
     _scrollToBottom();
+
+    // Tunggu sebentar untuk animasi hands_up, lalu ganti ke loading animation
+    await Future.delayed(const Duration(milliseconds: 500));
+    if (mounted) {
+      setState(() {
+        _currentAnimation = 'Look_down_right'; // Animasi saat AI loading
+      });
+    }
 
     final response = await _aiService.sendMessage(text);
 
     setState(() {
       _messages.add(ChatMessage(text: response, isUser: false));
       _isLoading = false;
+      _currentAnimation = 'success'; // Animasi saat AI selesai
     });
     _scrollToBottom();
+
+    // Kembali ke idle setelah 2 detik
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) {
+        setState(() {
+          _currentAnimation = 'idle';
+        });
+      }
+    });
   }
 
   void _scrollToBottom() {
@@ -74,10 +95,18 @@ class _ChatScreenState extends State<ChatScreen> {
             Icons.arrow_back_ios_new_rounded,
             color: AppTheme.textLight,
           ),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            try {
+              if (Navigator.of(context).canPop()) {
+                context.pop();
+              }
+            } catch (e) {
+              // Ignore pop errors
+            }
+          },
         ),
         title: const Text(
-          'AI Translator',
+          'AI Penerjemah',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: AppTheme.textMain,
@@ -88,6 +117,16 @@ class _ChatScreenState extends State<ChatScreen> {
       body: SafeArea(
         child: Column(
           children: [
+            // Rive Character
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              child: RiveCharacter(
+                riveAssetPath: 'assets/animations/fluenta_character/4771-9633-login-teddy.riv',
+                width: 180,
+                height: 180,
+                animationName: _currentAnimation,
+              ),
+            ),
             Expanded(
               child: ListView.builder(
                 controller: _scrollController,
@@ -124,7 +163,7 @@ class _ChatScreenState extends State<ChatScreen> {
             child: TextField(
               controller: _textController,
               decoration: InputDecoration(
-                hintText: 'Type a sentence to translate...',
+                hintText: 'Ketik kalimat untuk diterjemahkan...',
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 20,
                   vertical: 14,

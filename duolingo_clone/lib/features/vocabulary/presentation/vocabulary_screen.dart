@@ -9,62 +9,78 @@ class VocabularyScreen extends StatefulWidget {
 }
 
 class _VocabularyScreenState extends State<VocabularyScreen> {
-  String selectedCategory = 'All';
+  String selectedCategory = 'Semua';
 
   final List<Map<String, dynamic>> words = [
     {
       'word': 'Eloquent',
       'pronunciation': '/ˈɛləkwənt/',
-      'definition': 'Fluent or persuasive in speaking or writing.',
-      'level': 'Eloquent phrases',
+      'definition': 'Fasih atau persuasif dalam berbicara maupun menulis.',
+      'level': 'Frasa Fasih',
       'levelColor': Color(0xFF10B981),
-      'category': 'Business',
+      'category': 'Bisnis',
     },
     {
       'word': 'Serendipity',
       'pronunciation': '/ˌsɛrənˈdɪpɪti/',
       'definition':
-          'The occurrence and development of events by chance in a happy or beneficial way.',
-      'level': 'Word of the Day',
+          'Kejadian dan perkembangan peristiwa secara kebetulan dengan cara yang menyenangkan atau menguntungkan.',
+      'level': 'Kata Hari Ini',
       'levelColor': AppTheme.primaryBlue,
-      'category': 'All',
+      'category': 'Semua',
       'isWordOfDay': true,
     },
     {
       'word': 'Resilience',
       'pronunciation': '/rɪˈzɪliəns/',
-      'definition': 'The capacity to recover quickly from difficulties.',
-      'level': 'Intermediate',
+      'definition': 'Kemampuan untuk pulih dengan cepat dari kesulitan.',
+      'level': 'Menengah',
       'levelColor': Color(0xFFF59E0B),
-      'category': 'Travel',
+      'category': 'Perjalanan',
     },
     {
       'word': 'Ubiquitous',
       'pronunciation': '/juːˈbɪkwɪtəs/',
-      'definition': 'Present, appearing, or found everywhere.',
-      'level': 'Expert',
+      'definition': 'Hadir, muncul, atau ditemukan di mana-mana.',
+      'level': 'Mahir',
       'levelColor': Color(0xFFFACC15),
-      'category': 'All',
+      'category': 'Semua',
     },
     {
       'word': 'Melancholy',
       'pronunciation': '/ˈmɛlənkɒli/',
       'definition':
-          'A feeling of pensive sadness, typically with no obvious cause.',
-      'level': 'Intermediate',
+          'Perasaan sedih yang mendalam, biasanya tanpa sebab yang jelas.',
+      'level': 'Menengah',
       'levelColor': Color(0xFFF59E0B),
-      'category': 'All',
+      'category': 'Semua',
     },
   ];
 
   @override
   Widget build(BuildContext context) {
-    final filteredWords = selectedCategory == 'All'
+    final filteredWords = selectedCategory == 'Semua'
         ? words
         : words.where((w) => w['category'] == selectedCategory).toList();
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FF),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppTheme.primaryBlue),
+          onPressed: () {
+            try {
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              }
+            } catch (e) {
+              // Ignore pop errors
+            }
+          },
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -158,7 +174,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                     children: [
                       // Title
                       Text(
-                        'Your Words',
+                        'Kata-kataku',
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.w700,
@@ -180,7 +196,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                         ),
                         child: TextField(
                           decoration: InputDecoration(
-                            hintText: 'Search 1,245 words...',
+                            hintText: 'Cari 1.245 kata...',
                             hintStyle: TextStyle(
                               color: AppTheme.textLight,
                               fontSize: 16,
@@ -204,11 +220,11 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
-                            _buildCategoryChip('All', true),
+                            _buildCategoryChip('Semua', true),
                             const SizedBox(width: 8),
-                            _buildCategoryChip('Business', false),
+                            _buildCategoryChip('Bisnis', false),
                             const SizedBox(width: 8),
-                            _buildCategoryChip('Travel', false),
+                            _buildCategoryChip('Perjalanan', false),
                             const SizedBox(width: 8),
                             IconButton(
                               icon: Icon(
@@ -424,7 +440,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'WORD OF THE DAY',
+                    'KATA HARI INI',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,
@@ -490,7 +506,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                     elevation: 0,
                   ),
                   child: Text(
-                    'Add to My Words',
+                    'Tambah ke Kata-kataku',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -511,7 +527,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                     ),
                   ),
                   child: Text(
-                    'Learn',
+                    'Pelajari',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -573,7 +589,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                     ),
                   ),
                   Text(
-                    'mastered',
+                    'dikuasai',
                     style: TextStyle(
                       fontSize: 14,
                       color: AppTheme.textLight,
@@ -585,7 +601,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
           ),
           const SizedBox(height: 24),
           Text(
-            'You\'re making great progress!',
+            'Kamu terus berkembang!',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w700,
@@ -595,7 +611,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'You\'ve mastered 91 new words this month. Keep up the excellent work! Your goal of 125 words is within reach.',
+            'Kamu sudah menguasai 91 kata baru bulan ini. Terus semangat! Target 125 kata sudah hampir tercapai.',
             style: TextStyle(
               fontSize: 14,
               color: AppTheme.textLight,
@@ -611,7 +627,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '91 / 125 words',
+                    '91 / 125 kata',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -657,7 +673,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                 elevation: 0,
               ),
               child: Text(
-                'Take a Quiz',
+                'Mulai Kuis',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,

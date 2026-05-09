@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/auth/presentation/login_screen.dart';
 import '../../features/auth/presentation/register_screen.dart';
-import '../../features/quiz/presentation/quiz_screen.dart';
+import '../../features/quiz/presentation/level_selection_screen.dart';
 import '../../features/chat_ai/presentation/chat_screen.dart';
 import '../../features/splash/presentation/splash_screen.dart';
 import '../../features/home/presentation/main_layout_screen.dart';
@@ -20,7 +20,7 @@ final appRouter = GoRouter(
       path: '/home',
       builder: (context, state) => const MainLayoutScreen(),
     ),
-    GoRoute(path: '/quiz', builder: (context, state) => const QuizScreen()),
+    GoRoute(path: '/quiz', builder: (context, state) => const LevelSelectionScreen()),
     GoRoute(path: '/chat', builder: (context, state) => const ChatScreen()),
   ],
 );
